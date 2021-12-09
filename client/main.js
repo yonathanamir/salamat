@@ -3,4 +3,5 @@ function geo_success(position){
     alert(str)
 }
 
+alert('Test')
 navigator.geolocation.getCurrentPosition(geo_success)

@@ -1,4 +1,4 @@
-function main(){
+function login(){
     function create_session(username){
         session_obj = {
             username: username,
@@ -17,4 +17,4 @@ function main(){
     $('#btn_login').click(btn_click)
 }    
 
-$(window).on('load', main);
+$(window).on('load', login);

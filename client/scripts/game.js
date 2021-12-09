@@ -1,4 +1,4 @@
-function main(){
+function game(){
     function get_session(){
         if ('session' in localStorage){
             return JSON.parse(localStorage['session']);
@@ -24,6 +24,8 @@ function main(){
 
     $('.username')[0].innerHTML = session.username;
     $('#btn_logout').click(logout);
+    $('.content').show();
+    $('.loading').hide();
 }
 
-$(window).on('load', main);
+$(window).on('load', game);

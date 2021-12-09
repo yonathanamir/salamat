@@ -24,15 +24,24 @@ def create_player(name):
     return SUCCESS_STATUS
 
 
+@app.route('/get/room/<name>')
+def get_players_in_room(name):
+    data = query_db(f"""select * from 
+(SELECT room from users where name="alice") as 'a'
+join (select * from users where name!="alice") as 'b'
+on a.room = b.room""")
+    return json.dumps(data)
+
+
 @app.route('/get/player/<name>')
 def get_player(name):
-    data = query_db(f"SELECT name, rank, room, location, ismaster FROM users WHERE name='{name}'", one=True)
+    data = query_db(f"SELECT * FROM users WHERE name='{name}'", one=True)
     return json.dumps(data)
 
 
 @app.route('/get/player/')
 def get_players():
-    data = query_db(f"SELECT name, rank, room, location, ismaster FROM users")
+    data = query_db(f"SELECT * FROM users")
     return json.dumps(data)
 
 

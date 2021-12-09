@@ -13,8 +13,8 @@ function main(){
     }
 
     const watchID = navigator.geolocation.watchPosition((position) => {
-        $('.coord .coord-lat')[0].innerHTML = position.coords.latitude;
-        $('.coord .coord-lon')[0].innerHTML = position.coords.longitude;
+        // $('.coord .coord-lat')[0].innerHTML = position.coords.latitude;
+        // $('.coord .coord-lon')[0].innerHTML = position.coords.longitude;
     });
 
     session = get_session()

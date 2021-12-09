@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="./stylesheets/battle.css">
 
         <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+        <script type="text/javascript" src="scripts/main.js"></script>
         <script type="text/javascript" src="scripts/battle.js"></script>
     </head>
 
@@ -22,33 +23,31 @@
 
             <a-marker id="battle-marker" type='barcode' value='6'>
                 <!-- <a-image id="player" 
-                    src="/assets/player2.jpg" position="-2 0 0" scale="1 1 1">
-                </a-image>
+                    src="/assets/hero.png" position="-2 0 0" scale="1 1 1">
+                </a-image> -->
+                <a-plane id="player"
+                    position="-2 0 0" scale="1 1 1"
+                    material="src:url(/assets/hero-t.png); transparent:true; alpha-test:0.5
+                "></a-plane>
                 <a-entity id="enemy"
                     animation="property: opacity; to: 0 1 0; loop: false; startEvents: damage;"
                     position="2 1 0" scale="3 3 3" geometry="primitive:plane;" 
-                    material="shader:gif;src:url(/assets/mino.gif); side: double">
-                </a-entity> -->
-
-                <a-entity id="enemy"
-                    geometry="primitive: box"
-                    material="color: red"
-                    animation__mouseenter="property: components.material.material.color; type: color; to: blue; startEvents: damage; dur: 500";
-                    animation__mouseleave="property: components.material.material.color; type: color; to: red; startEvents: mouseleave; dur: 500";>
+                    material="shader:gif;src:url(/assets/mino-t.gif); side: double">
                 </a-entity>
-
             </a-marker>
 
             <a-marker-camera camera></a-marker-camera>
         </a-scene>
 
         <div class="ui">
-            <input class="attack-btn" type="button" value="Attack 1"/>
-            <input class="attack-btn" type="button" value="Attack 2"/>
-            <input class="attack-btn" type="button" value="Attack 3"/>
-            <input class="attack-btn" type="button" value="Attack 4"/>
-            <input class="attack-btn" type="button" value="Attack 5"/>
-            <input class="attack-btn" type="button" value="Attack 6"/>
+            <div class="user">
+                <span class="username"></span> <span class="rank"></span>
+            </div>
+            <div class="attacks">
+                <input class="attack-btn" id="atk-1" type="button" value="Attack 1"/>
+                <input class="attack-btn" id="atk-2" type="button" value="Attack 2"/>
+                <input class="attack-btn" id="atk-3" type="button" value="Attack 3"/>
+            </div>
         </div>
 
     </body>

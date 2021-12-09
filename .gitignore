@@ -2,3 +2,5 @@ server/.idea
 .idea/workspace.xml
 
 .idea/
+
+server/game.db

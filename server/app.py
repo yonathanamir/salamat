@@ -1,11 +1,13 @@
 import sqlite3
 from flask import Flask
 from flask import request
+from flask_cors import CORS
 import json
 from random import choices
 from string import ascii_lowercase
 
 app = Flask(__name__)
+CORS(app)
 con = sqlite3.connect('game.db', check_same_thread=False)
 cur = con.cursor()
 
@@ -55,7 +57,7 @@ def create_room(name):
 
 @app.route('/update/location/<name>', methods=['PUT', 'POST'])
 def update_location(name):
-    body = request.json
+    body = request.get_json(force=True)
     coor = f"({body['lon']},{body['lat']})"
     update_player(name, 'location', coor)
     return SUCCESS_STATUS
@@ -66,12 +68,13 @@ def get_rooms(name):
     rooms = query_db('''SELECT a.room, location, players from (SELECT room, location FROM users WHERE ismaster='true') as 'a'
 JOIN (SELECT room, count(name) as players FROM users WHERE room!='null' GROUP BY room) as 'b'
 ON a.room=b.room''')
+    my_coor = tuple(json.loads(get_player(name))['location'])
     return json.dumps(rooms)
 
 
 @app.route('/update/room/<name>', methods=['PUT', 'POST'])
 def update_room(name):
-    body = request.json
+    body = request.get_json(force=True)
     room = body['room']
     update_player(name, 'room', room)
     return SUCCESS_STATUS

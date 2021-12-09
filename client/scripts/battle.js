@@ -7,6 +7,7 @@ function battle(){
     }
 
     $('.attack-btn').click(damage_enemy)
+    $('.ui .user .username')[0].innerHTML = session.username
 }
 
 $(window).on('load', battle);

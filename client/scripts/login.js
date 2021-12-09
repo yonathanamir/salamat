@@ -6,7 +6,7 @@ function login(){
         }
         
         localStorage.setItem('session', JSON.stringify(session_obj))
-        window.location.replace('./index.html');
+        window.location.replace('./battle.html');
     }
         
     function btn_click(){

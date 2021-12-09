@@ -36,8 +36,8 @@ def get_players():
     return json.dumps(data)
 
 
-@app.route('/create/party/<name>')
-def create_party(name):
+@app.route('/create/room/<name>')
+def create_room(name):
     code = "".join(choices(ascii_lowercase, k=4)).upper()
     update_player(name, 'room', code)
     update_player(name, 'ismaster', "true")

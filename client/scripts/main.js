@@ -17,6 +17,10 @@ function main(){
         window.location.replace('./login.html')
     }
 
+    options = {
+        enableHighAccuracy: true
+    }
+
     const watchID = navigator.geolocation.watchPosition((position) => {
         dataobj = {
             'lon': position.coords.longitude,
@@ -44,7 +48,7 @@ function main(){
                 }
             },
         });
-    });
+    }, null, options);
 
     session = get_session()
     if (!session){

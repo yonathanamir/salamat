@@ -1,3 +1,8 @@
+_api_base = 'http://34.215.64.38:5000'
+
+_dag = {
+}
+
 function main(){
     function get_session(){
         if ('session' in localStorage){
@@ -13,8 +18,30 @@ function main(){
     }
 
     const watchID = navigator.geolocation.watchPosition((position) => {
-        // $('.coord .coord-lat')[0].innerHTML = position.coords.latitude;
-        // $('.coord .coord-lon')[0].innerHTML = position.coords.longitude;
+        dataobj = {
+            'lon': position.coords.longitude,
+            'lat': position.coords.latitude,
+        }
+
+        $.ajax({
+            type: "POST",
+            url: _api_base + '/update/location/' + session.username,
+            data: JSON.stringify(dataobj),
+            contentType: "application/json; charset=utf-8",
+            dataType: "json"
+        });
+
+        $.ajax({
+            type: "GET",
+            url: _api_base + '/get/rooms/' + session.username,
+            contentType: "application/json; charset=utf-8",
+            dataType: "json",
+            success: function(data) {
+                session.rooms = data
+                
+                _dag.rooms_updated()
+            }
+        });
     });
 
     session = get_session()

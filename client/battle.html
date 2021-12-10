@@ -3,8 +3,8 @@
     <head>
         <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
         <link rel="stylesheet" href="./stylesheets/battle.css">
-
-        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.slim.min.js"></script>
+        
+        <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
         <script type="text/javascript" src="scripts/main.js"></script>
         <script type="text/javascript" src="scripts/battle.js"></script>
     </head>
@@ -25,15 +25,24 @@
                 <!-- <a-image id="player" 
                     src="/assets/hero.png" position="-2 0 0" scale="1 1 1">
                 </a-image> -->
-                <a-plane id="player"
-                    position="-2 0 0" scale="1 1 1"
-                    material="src:url(./assets/hero-t.png); transparent:true; alpha-test:0.5
-                "></a-plane>
+                <!-- <a-plane id="player"
+                    position="1 0 0" scale="-1 1 1"
+                    material="src:url(./assets/hero.png)">
+                </a-plane>
+                <a-plane id="enemy"
+                    position="-2 1 0" scale="3 3 3"
+                    material="src:url(./assets/mino.png)">
+                </a-plane> -->
+
                 <a-entity id="enemy"
-                    animation="property: opacity; to: 0 1 0; loop: false; startEvents: damage;"
+                    position="-2 1 0" scale="3 3 3" geometry="primitive:plane;" 
+                    material="src:url(./assets/mino.png);">
+                </a-entity>
+
+                <!-- <a-entity id="enemy"
                     position="2 1 0" scale="3 3 3" geometry="primitive:plane;" 
                     material="shader:gif;src:url(./assets/mino-t.gif); side: double">
-                </a-entity>
+                </a-entity> -->
             </a-marker>
 
             <a-marker-camera camera></a-marker-camera>
@@ -47,6 +56,10 @@
                 <input class="attack-btn" id="atk-1" type="button" value="Attack 1"/>
                 <input class="attack-btn" id="atk-2" type="button" value="Attack 2"/>
                 <input class="attack-btn" id="atk-3" type="button" value="Attack 3"/>
+            </div>
+
+            <div class='rooms'>
+
             </div>
         </div>
 

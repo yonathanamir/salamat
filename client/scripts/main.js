@@ -29,7 +29,7 @@ function main(){
             data: JSON.stringify(dataobj),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            headers: {'Origin': 'salamat'},
+            headers: {'X-Requested-With': 'salamat'},
         });
 
         $.ajax({
@@ -44,7 +44,7 @@ function main(){
                     _dag.rooms_updated()
                 }
             },
-            headers: {'Origin': 'salamat'},
+            headers: {'X-Requested-With': 'salamat'},
         });
     });
 

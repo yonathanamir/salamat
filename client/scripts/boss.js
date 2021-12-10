@@ -207,7 +207,7 @@ function battle(){
     draw_enemies(_m_enemies)
 
     $('.attack-btn').click(damage_enemy)
-    $('.ui .user .username')[0].innerHTML = session.username
+    $('.ui .username')[0].innerHTML = session.username
 
     function update_rooms() {
         el = $('.ui .rooms')[0]

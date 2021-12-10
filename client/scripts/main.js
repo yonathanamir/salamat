@@ -1,4 +1,4 @@
-_api_base = 'https://cors-everywhere.herokuapp.com/http://34.215.64.38:5000'
+_api_base = 'http://34.215.64.38:5000'
 
 _dag = {
 }
@@ -29,7 +29,6 @@ function main(){
             data: JSON.stringify(dataobj),
             contentType: "application/json; charset=utf-8",
             dataType: "json",
-            headers: {'X-Requested-With': 'salamat'},
         });
 
         $.ajax({
@@ -44,7 +43,6 @@ function main(){
                     _dag.rooms_updated()
                 }
             },
-            headers: {'X-Requested-With': 'salamat'},
         });
     });
 

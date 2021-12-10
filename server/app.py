@@ -80,7 +80,7 @@ ON a.room=b.room''')
 
 
 def room_is_close(coor1, coor2):
-    return geopy.distance.geodesic(coor1, coor2).m < 2
+    return geopy.distance.geodesic(coor1, coor2).m < 0.05
 
 
 @app.route('/update/room/<name>', methods=['PUT', 'POST'])

@@ -10,6 +10,22 @@
     z-index: 10;
   }
 
+.ui * :hover{
+  cursor: pointer;
+}
+
+.ui-control {
+  padding: 0.25em;
+  border-radius: 4px;
+  border: none;
+  background: white;
+  color: black;
+  width: 4em;
+  height: 2em;
+  text-align: center;
+  vertical-align: middle;
+}
+
 .attack-btn {
     padding: 0.25em;
     border-radius: 4px;

@@ -5,6 +5,8 @@ from flask_cors import CORS
 import json
 from random import choices
 from string import ascii_lowercase
+from ast import literal_eval as make_tuple
+import geopy.distance
 
 app = Flask(__name__)
 CORS(app)
@@ -68,8 +70,16 @@ def get_rooms(name):
     rooms = query_db('''SELECT a.room, location, players from (SELECT room, location FROM users WHERE ismaster='true') as 'a'
 JOIN (SELECT room, count(name) as players FROM users WHERE room!='null' GROUP BY room) as 'b'
 ON a.room=b.room''')
-    my_coor = tuple(json.loads(get_player(name))['location'])
-    return json.dumps(rooms)
+    my_coor = make_tuple(json.loads(get_player(name))['location'])
+    good_rooms = []
+    for r in rooms:
+        if room_is_close(my_coor, make_tuple(r['location'])):
+            good_rooms.append(r)
+    return json.dumps(good_rooms)
+
+
+def room_is_close(coor1, coor2):
+    return geopy.distance.geodesic(coor1, coor2).m < 2
 
 
 @app.route('/update/room/<name>', methods=['PUT', 'POST'])

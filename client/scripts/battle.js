@@ -2,17 +2,20 @@ _m_players = [
     {
         name: 'yonathan',
         rank: 6,
-        img: './assets/hero.png'
+        img: './assets/hero.gif',
+        punch: './assets/hero-punch.gif',
     },
     {
         name: 'moti',
         rank: 12,
-        img: './assets/hero.png'
+        img: './assets/hero.gif',
+        punch: './assets/hero-punch.gif',
     },
     {
         name: 'noam',
         rank: 18,
-        img: './assets/hero.png'
+        img: './assets/hero.gif',
+        punch: './assets/hero-punch.gif',
     },
 ]
 
@@ -45,7 +48,27 @@ function battle(){
         entity.components.material.attrValue.src = 'url('+enemy.hit+')'
         entity.flushToDOM()
 
+        player_punches()
+
         setTimeout(heal_enemy, 5000, id)
+    }
+
+    function player_punches(){
+        for (i in _m_players){
+            player = _m_players[i]
+            entity = $('#e-'+player.name)[0]
+            entity.components.material.attrValue.src = 'url('+player.punch+')'
+            entity.flushToDOM()
+
+            setTimeout(player_stand, 5000, i)
+        }
+    }
+
+    function player_stand(id){
+        player = _m_players[id]
+        entity = $('#e-'+player.name)[0]
+        entity.components.material.attrValue.src = 'url('+player.img+')'
+        entity.flushToDOM()
     }
 
     function heal_enemy(id){
@@ -55,7 +78,7 @@ function battle(){
         entity.flushToDOM()
     }
 
-    function generate_png_view(ent, pos, scale, x=0, y=0){
+    function generate_png_view(ent, pos, scale){
         name_str = '"e-'+ent.name+'"'
         position_str = '"'+pos.join(' ')+'"'
         scale_str = '"'+scale.join(' ')+'"'
@@ -76,10 +99,12 @@ function battle(){
     function draw_players(players){
         html = ''
         positions = [[1, 0, 0], [2, 1, 0], [2, -1, 0]]
-        scales = [[-1, 1, 1], [-1, 1, 1], [-1, 1, 1]]
+        // scales = [[-1, 1, 1], [-1, 1, 1], [-1, 1, 1]]
+
+        // positions = [[1, 0, 1], [1, 0, -1],[1, 0, 0], [2, 1, 1], [2, 1, 0], [2, -1, -1]]
     
         for (let i=0; i<players.length; i++){
-            html += generate_png_view(players[i], positions[i], scales[i], x=i, y=i)
+            html += generate_gif_view(players[i], positions[i], [-1, 1, 1])
         }
     
         $('a-scene#players')[0].innerHTML = html
@@ -124,6 +149,7 @@ function preloadImage(url)
 
 for (i in _m_players){
     preloadImage(_m_players[i].img)
+    preloadImage(_m_enemies[i].punch)
 }
 
 for (i in _m_enemies){

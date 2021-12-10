@@ -55,10 +55,13 @@ function main(){
         window.location.replace('./login.html')
     }
 
-    $('.username')[0].innerHTML = session.username;
-    $('#btn_logout').click(logout);
-    $('.content').show();
-    $('.loading').hide();
+    try {
+        $('.username')[0].innerHTML = session.username;
+        $('#btn_logout').click(logout);
+        $('.content').show();
+        $('.loading').hide();
+    }
+    catch (error) {}
 }
 
 $(window).on('load', main);

@@ -21,23 +21,23 @@ _m_players = [
 
 _m_enemies = [
     {
-        name: 'mino',
-        rank: 25,
-        img: './assets/mino.gif',
-        hit: './assets/mino.gif',
-    },
-    {
-        name: 'b_troll',
+        name: 'r_troll',
         rank: 10,
         img: './assets/troll_red.gif',
         hit: './assets/troll_red_hit.gif',
     },
     {
-        name: 'r_troll',
+        name: 'b_troll1',
         rank: 5,
         img: './assets/troll_blue.gif',
         hit: './assets/troll_blue_hit.gif',
-    }
+    },
+    {
+        name: 'b_troll2',
+        rank: 5,
+        img: './assets/troll_blue.gif',
+        hit: './assets/troll_blue_hit.gif',
+    },
 ]
 
 function battle(){
@@ -109,8 +109,8 @@ function battle(){
     
     function draw_enemies(enemies){
         html = ''
-        positions = [[-2, 1, 0], [-5, 1, 0], [-4.5, -0.5, 0]]
-        scales = [[3, 3, 3], [-2, 2, 2], [-1, 1, 1]]
+        positions = [[-1, 0, 0], [-2.5, 1, 0], [-2.5, -1, 0]]
+        scales = [[-2, 2, 2], [-1, 1, 1], [-1, 1, 1]]
     
         for (let i=0; i<enemies.length; i++){
             html += generate_gif_view(enemies[i], positions[i], scales[i],)

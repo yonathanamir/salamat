@@ -25,18 +25,6 @@ _m_enemies = [
         rank: 25,
         img: './assets/mino.gif',
         hit: './assets/mino.gif',
-    },
-    {
-        name: 'b_troll',
-        rank: 10,
-        img: './assets/troll_red.gif',
-        hit: './assets/troll_red_hit.gif',
-    },
-    {
-        name: 'r_troll',
-        rank: 5,
-        img: './assets/troll_blue.gif',
-        hit: './assets/troll_blue_hit.gif',
     }
 ]
 

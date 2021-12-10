@@ -1,4 +1,4 @@
-_api_base = 'http://34.215.64.38:5000'
+_api_base = 'https://cors-everywhere.herokuapp.com/http://34.215.64.38:5000'
 
 _dag = {
 }
@@ -28,7 +28,8 @@ function main(){
             url: _api_base + '/update/location/' + session.username,
             data: JSON.stringify(dataobj),
             contentType: "application/json; charset=utf-8",
-            dataType: "json"
+            dataType: "json",
+            headers: {'Origin': 'salamat'},
         });
 
         $.ajax({
@@ -39,8 +40,11 @@ function main(){
             success: function(data) {
                 session.rooms = data
                 
-                _dag.rooms_updated()
-            }
+                if ('rooms_updated' in _dag){
+                    _dag.rooms_updated()
+                }
+            },
+            headers: {'Origin': 'salamat'},
         });
     });
 

@@ -1,11 +1,13 @@
 import sqlite3
 from flask import Flask
 from flask import request
+from flask_cors import CORS
 import json
 from random import choices
 from string import ascii_lowercase
 
 app = Flask(__name__)
+CORS(app)
 con = sqlite3.connect('game.db', check_same_thread=False)
 cur = con.cursor()
 
@@ -24,15 +26,24 @@ def create_player(name):
     return SUCCESS_STATUS
 
 
+@app.route('/get/room/<name>')
+def get_players_in_room(name):
+    data = query_db(f"""select * from 
+(SELECT room from users where name="alice") as 'a'
+join (select * from users where name!="alice") as 'b'
+on a.room = b.room""")
+    return json.dumps(data)
+
+
 @app.route('/get/player/<name>')
 def get_player(name):
-    data = query_db(f"SELECT name, rank, room, location, ismaster FROM users WHERE name='{name}'", one=True)
+    data = query_db(f"SELECT * FROM users WHERE name='{name}'", one=True)
     return json.dumps(data)
 
 
 @app.route('/get/player/')
 def get_players():
-    data = query_db(f"SELECT name, rank, room, location, ismaster FROM users")
+    data = query_db(f"SELECT * FROM users")
     return json.dumps(data)
 
 
@@ -46,7 +57,7 @@ def create_room(name):
 
 @app.route('/update/location/<name>', methods=['PUT', 'POST'])
 def update_location(name):
-    body = request.json
+    body = request.get_json(force=True)
     coor = f"({body['lon']},{body['lat']})"
     update_player(name, 'location', coor)
     return SUCCESS_STATUS
@@ -57,12 +68,13 @@ def get_rooms(name):
     rooms = query_db('''SELECT a.room, location, players from (SELECT room, location FROM users WHERE ismaster='true') as 'a'
 JOIN (SELECT room, count(name) as players FROM users WHERE room!='null' GROUP BY room) as 'b'
 ON a.room=b.room''')
+    my_coor = tuple(json.loads(get_player(name))['location'])
     return json.dumps(rooms)
 
 
 @app.route('/update/room/<name>', methods=['PUT', 'POST'])
 def update_room(name):
-    body = request.json
+    body = request.get_json(force=True)
     room = body['room']
     update_player(name, 'room', room)
     return SUCCESS_STATUS

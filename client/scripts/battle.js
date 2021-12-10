@@ -18,36 +18,57 @@ _m_players = [
 
 _m_enemies = [
     {
-        name: 'Mino the Inspector',
+        name: 'mino',
         rank: 25,
-        img: './assets/mino.png'
+        img: './assets/mino.gif',
+        hit: './assets/mino.gif',
     },
     {
-        name: 'Big Blue Troll',
+        name: 'b_troll',
         rank: 10,
-        img: './assets/troll_red.gif'
+        img: './assets/troll_red.gif',
+        hit: './assets/troll_red_hit.gif',
     },
     {
-        name: 'Small Red Troll',
+        name: 'r_troll',
         rank: 5,
-        img: './assets/troll_red.gif'
+        img: './assets/troll_blue.gif',
+        hit: './assets/troll_blue_hit.gif',
     }
 ]
 
 function battle(){
     function damage_enemy(){
-        entity = $('#enemy')[0]
-        entity.components.material.attrValue.src = 'url(./assets/mino.gif)'
-        entity.components.material.attrValue.shader = 'gif'
-        entity.components.material.attrValue.side = 'double'
+        id = parseInt(this.id[this.id.length-1])-1
+        enemy = _m_enemies[id]
+        entity = $('#e-'+enemy.name)[0]
+        entity.components.material.attrValue.src = 'url('+enemy.hit+')'
+        entity.flushToDOM()
+
+        setTimeout(heal_enemy, 5000, id)
+    }
+
+    function heal_enemy(id){
+        enemy = _m_enemies[id]
+        entity = $('#e-'+enemy.name)[0]
+        entity.components.material.attrValue.src = 'url('+enemy.img+')'
         entity.flushToDOM()
     }
 
-    function generate_png_view(ent, pos, scale){
-        name_str = '"p-'+ent.name+'"'
+    function generate_png_view(ent, pos, scale, x=0, y=0){
+        name_str = '"e-'+ent.name+'"'
         position_str = '"'+pos.join(' ')+'"'
         scale_str = '"'+scale.join(' ')+'"'
         material_str = '"src:url('+ent.img+')"'
+    
+        return '<a-plane id='+name_str+' position='+position_str+' scale='+scale_str+' material='+material_str+'></a-plane>'
+    }
+
+    function generate_gif_view(ent, pos, scale){
+        name_str = '"e-'+ent.name+'"'
+        position_str = '"'+pos.join(' ')+'"'
+        scale_str = '"'+scale.join(' ')+'"'
+        material_str = '"shader:gif;side:double;src:url('+ent.img+')"'
     
         return '<a-plane id='+name_str+' position='+position_str+' scale='+scale_str+' material='+material_str+'></a-plane>'
     }
@@ -58,7 +79,7 @@ function battle(){
         scales = [[-1, 1, 1], [-1, 1, 1], [-1, 1, 1]]
     
         for (let i=0; i<players.length; i++){
-            html += generate_png_view(players[i], positions[i], scales[i],)
+            html += generate_png_view(players[i], positions[i], scales[i], x=i, y=i)
         }
     
         $('a-scene#players')[0].innerHTML = html
@@ -66,11 +87,11 @@ function battle(){
     
     function draw_enemies(enemies){
         html = ''
-        positions = [[-2, 1, 0], [-4, 2, 0], [-3, -1, 0]]
-        scales = [[3, 3, 3], [-1, 1, 1], [-1, 1, 1]]
+        positions = [[-2, 1, 0], [-5, 1, 0], [-4.5, -0.5, 0]]
+        scales = [[3, 3, 3], [-2, 2, 2], [-1, 1, 1]]
     
         for (let i=0; i<enemies.length; i++){
-            html += generate_png_view(enemies[i], positions[i], scales[i],)
+            html += generate_gif_view(enemies[i], positions[i], scales[i],)
         }
     
         $('a-scene#enemies')[0].innerHTML = html
@@ -92,6 +113,22 @@ function battle(){
     }
 
     _dag.rooms_updated = update_rooms
+}
+
+// Preload
+function preloadImage(url)
+{
+    var img=new Image();
+    img.src=url;
+}
+
+for (i in _m_players){
+    preloadImage(_m_players[i].img)
+}
+
+for (i in _m_enemies){
+    preloadImage(_m_enemies[i].img)
+    preloadImage(_m_enemies[i].hit)
 }
 
 $(window).on('load', battle);

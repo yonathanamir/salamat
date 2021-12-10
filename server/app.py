@@ -8,7 +8,8 @@ from string import ascii_lowercase
 from ast import literal_eval as make_tuple
 import geopy.distance
 
-app = Flask(__name__)
+app = Flask(__name__, static_url_path='',
+            static_folder='../client/')
 CORS(app)
 con = sqlite3.connect('game.db', check_same_thread=False)
 cur = con.cursor()
@@ -16,7 +17,7 @@ cur = con.cursor()
 SUCCESS_STATUS = {'status': "ok"}
 
 
-@app.route('/')
+@app.route('/status')
 def hello_world():  # put application's code here
     return 'Hello World!'
 
